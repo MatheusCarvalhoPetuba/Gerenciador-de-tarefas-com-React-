@@ -1,8 +1,20 @@
 import { FaRegTrashAlt } from "react-icons/fa";
 import { FaCheck } from "react-icons/fa6";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 const Tasks = ({ tasks, onTaskclick, onDeleteTaskDelete }) => {
+  const navigate = useNavigate();
+
+  function onSeeDetailsClick(task) {
+    const query = new URLSearchParams();
+
+    query.set("title", task.title);
+    query.set("description", task.description);
+
+    navigate(`/task?${query.toString()}`);
+  }
+
   return (
     <ul className="flex flex-col gap-3">
       {tasks.map((task) => (
@@ -13,10 +25,13 @@ const Tasks = ({ tasks, onTaskclick, onDeleteTaskDelete }) => {
               task.isCompleted && "line-through"
             }`}
           >
-            {task.isCompleted && <FaCheck />}
+            {task.isCompleted && <FaCheck className="duration-300" />}
             {task.title}
           </button>
-          <button className="rounded-lg bg-slate-400 p-3 text-white duration-300 hover:bg-slate-600">
+          <button
+            onClick={() => onSeeDetailsClick(task)}
+            className="rounded-lg bg-slate-400 p-3 text-white duration-300 hover:bg-slate-600"
+          >
             <MdKeyboardDoubleArrowRight size={18} />
           </button>
           <button

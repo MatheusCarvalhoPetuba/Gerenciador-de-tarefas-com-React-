@@ -1,10 +1,9 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
 import InputTask from "./InputTask";
 
 const AddTasks = ({ AddTaskClick }) => {
   const nameTask = useRef(null);
-  // const [nameTask, setNameTask] = useState("");
   const descriptionTask = useRef(null);
 
   function handleAddTaskClick(e) {
@@ -14,6 +13,9 @@ const AddTasks = ({ AddTaskClick }) => {
     const description = descriptionTask.current.value;
 
     AddTaskClick(title, description);
+
+    nameTask.current.value = "";
+    descriptionTask.current.value = "";
   }
 
   return (

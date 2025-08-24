@@ -1,17 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 } from "uuid";
 
-import ListTasks from "../ListTasks";
+// import ListTasks from "../ListTasks";
 import AddTasks from "./components/AddTasks";
 import Tasks from "./components/tasks";
+import api from "./server/api";
 
 function App() {
-  const [tasks, setTasks] = useState(ListTasks);
+  const [tasks, setTasks] = useState([]);
 
-  function onTaskclick(taskId) {
-    const newTasks = tasks.map((task) => {
+  async function onTaskclick(taskId) {
+    const newTasks = tasks.map(async (task) => {
       if (task.id === taskId) {
-        return { ...task, isCompleted: !task.isCompleted };
+        const completed = { ...task, isCompleted: !task.isCompleted };
+
+        await api.patch(`/tasks/${taskId}`, completed);
+        fetchTasks();
+        return;
       }
 
       return task;
@@ -20,13 +25,20 @@ function App() {
     setTasks(newTasks);
   }
 
-  function onDeleteTaskDelete(taskId) {
+  async function onDeleteTaskDelete(taskId) {
     const newTasks = tasks.filter((task) => task.id !== taskId);
 
-    setTasks(newTasks);
+    try {
+      await api.delete(`/tasks/${taskId}`);
+
+      setTasks(newTasks);
+      fetchTasks();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  function AddTaskClick(title, description) {
+  async function AddTaskClick(title, description) {
     if (title.trim() === "" || description.trim() === "") {
       return alert("Preencha todos os campos.");
     }
@@ -38,8 +50,24 @@ function App() {
       isCompleted: false,
     };
 
-    setTasks([...tasks, newTask]);
+    try {
+      const response = await api.post("/tasks", newTask);
+      setTasks([...tasks, response]);
+      fetchTasks();
+    } catch (error) {
+      console.log(error);
+    }
   }
+
+  async function fetchTasks() {
+    const response = await api.get("/tasks");
+
+    setTasks(response.data);
+  }
+
+  useEffect(() => {
+    fetchTasks();
+  }, []);
 
   return (
     <div className="h-screen w-screen bg-slate-500 px-5">

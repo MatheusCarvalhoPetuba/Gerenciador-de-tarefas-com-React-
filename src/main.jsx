@@ -5,8 +5,23 @@ import App from "./App.jsx";
 
 import "./index.css";
 
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+import Taskpage from "./assets/pages/Taskpage.jsx";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+  },
+  {
+    path: "/task",
+    element: <Taskpage />,
+  },
+]);
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <App />
+    <RouterProvider router={router} />
   </StrictMode>,
 );
