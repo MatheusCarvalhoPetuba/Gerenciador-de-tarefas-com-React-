@@ -13,10 +13,15 @@ const Taskpage = () => {
 
   useEffect(() => {
     const fetchTask = async () => {
-      const response = await api.get(`/tasks/${taskid}`);
-      console.log(response.data);
+      try {
+        const response = await api.get(`/tasks/${taskid}`);
+        console.log(response.data);
 
-      setTask(response.data);
+        setTask(response.data);
+      } catch (error) {
+        console.log(error);
+        navigate("/");
+      }
     };
 
     fetchTask();
