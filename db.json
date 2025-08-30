@@ -7,15 +7,15 @@
       "isCompleted": false
     },
     {
-      "id": "70d0d1d3-69ac-4254-952a-b7b8a2603c24",
-      "title": "Estudar React.js",
-      "description": "Estudar React.js no fullstack club",
-      "isCompleted": true
+      "id": "c47c53fe-b112-46a1-b7e9-117edc35a313",
+      "title": "estudar html online ",
+      "description": "HTML semantico",
+      "isCompleted": false
     },
     {
-      "id": "6df58264-5ea5-4218-8e61-141f9a46b8b7",
-      "title": "treino na segunda feira",
-      "description": "trino de peito no supino enclinado",
+      "id": "e9866783-d2ca-4a5b-b1f8-eed05f779c06",
+      "title": "treinar na academia ",
+      "description": "1h de trieno de cardio",
       "isCompleted": true
     }
   ]

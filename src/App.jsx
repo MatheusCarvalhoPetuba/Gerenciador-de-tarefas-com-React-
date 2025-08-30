@@ -25,18 +25,19 @@ function App() {
     setTasks(newTasks);
   }
 
-  async function onDeleteTaskDelete(taskId) {
-    const newTasks = tasks.filter((task) => task.id !== taskId);
+  // async function onDeleteTaskDelete(taskId) {
 
-    try {
-      await api.delete(`/tasks/${taskId}`);
+  //   const newTasks = tasks.filter((task) => task.id !== taskId);
 
-      setTasks(newTasks);
-      fetchTasks();
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  //   try {
+  //     await api.delete(`/tasks/${taskId}`);
+
+  //     setTasks(newTasks);
+  //     fetchTasks();
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
 
   async function AddTaskClick(title, description) {
     if (title.trim() === "" || description.trim() === "") {
@@ -78,11 +79,20 @@ function App() {
         <AddTasks AddTaskClick={AddTaskClick} />
 
         <div className="rounded-lg bg-slate-300 p-4 shadow-md">
-          <Tasks
+          {tasks.map((task) => (
+            <Tasks
+              key={task.id}
+              task={task}
+              onTaskclick={onTaskclick}
+              fetchTasks={fetchTasks}
+            />
+          ))}
+          {/* <Tasks
             tasks={tasks}
             onTaskclick={onTaskclick}
-            onDeleteTaskDelete={onDeleteTaskDelete}
-          />
+            fetchTasks={fetchTasks}
+            // onDeleteTaskDelete={onDeleteTaskDelete}
+          /> */}
         </div>
       </div>
     </div>
